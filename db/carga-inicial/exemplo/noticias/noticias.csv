@@ -1,0 +1,4 @@
+id_noticia,veiculo,url,titulo,data_publicacao,resumo
+N1,Veículo Exemplo A,https://exemplo.invalid/n1,Notícia fictícia 1,2018-04-10,Texto fictício para teste
+N2,Veículo Exemplo A,https://exemplo.invalid/n2,Notícia fictícia 2,2020-07-22,
+N3,Veículo Exemplo B,https://exemplo.invalid/n3,Notícia fictícia 3,2023-01-05,Texto fictício

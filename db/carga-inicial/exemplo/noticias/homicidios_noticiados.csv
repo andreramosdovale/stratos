@@ -1,0 +1,2 @@
+id_noticia,codigo_ibge,data_fato,qtd_vitimas,meio_empregado,motivacao,origem,modelo_llm,validado_por_humano,validado_em
+N1,3304557,2018-04-09,1,arma de fogo,disputa territorial,llm,modelo-exemplo,true,2024-03-01T10:00:00-03:00

@@ -1,0 +1,4 @@
+codigo,eixo,nome,unidade,descricao
+km_rodovia_pavimentada,transportes,Rodovias pavimentadas,km,Extensão fictícia de rodovias pavimentadas no município
+pct_domicilios_internet,telecomunicacoes,Domicílios com internet,%,Percentual fictício de domicílios com acesso à internet
+consumo_energia,energia,Consumo de energia elétrica,MWh,Consumo anual fictício de energia elétrica

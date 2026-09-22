@@ -1,0 +1,5 @@
+id_noticia,pessoa_chave,pessoa_nome,papel,origem,modelo_llm,validado_por_humano,validado_em
+N1,P-001,Pessoa Fictícia Um,vitima,llm,modelo-exemplo,true,2024-03-01T10:00:00-03:00
+N1,P-002,Pessoa Fictícia Dois,suspeito,llm,modelo-exemplo,false,
+N2,P-002,Pessoa Fictícia Dois,preso,llm,modelo-exemplo,true,2024-03-01T10:00:00-03:00
+N3,,Pessoa Fictícia Três,politico,humano,,true,2024-03-02T09:00:00-03:00

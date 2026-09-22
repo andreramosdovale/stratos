@@ -1,0 +1,2 @@
+id_noticia,id_operacao,nome_operacao,orgao,codigo_ibge,data_operacao,qtd_presos,qtd_mortos,origem,modelo_llm,validado_por_humano,validado_em
+N2,OP1,Operação Fictícia,PC-CE,2304400,2020-07-21,3,0,llm,modelo-exemplo,true,2024-03-01T10:00:00-03:00

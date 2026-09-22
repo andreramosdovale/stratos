@@ -1,0 +1,4 @@
+id_noticia,id_operacao,codigo_ibge,item,quantidade,unidade,descricao,origem,modelo_llm,validado_por_humano,validado_em
+N2,OP1,2304400,droga,12.5,kg,Descrição fictícia,llm,modelo-exemplo,true,2024-03-01T10:00:00-03:00
+N2,OP1,2304400,arma,2,un,,llm,modelo-exemplo,true,2024-03-01T10:00:00-03:00
+N3,,1501402,dinheiro,,,,llm,modelo-exemplo,false,

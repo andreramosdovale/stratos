@@ -1,0 +1,74 @@
+name: invips
+
+services:
+  db:
+    image: postgres:18.6
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: invips
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?defina POSTGRES_PASSWORD no .env}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale-provider=icu --icu-locale=pt-BR --data-checksums --auth-local=scram-sha-256 --auth-host=scram-sha-256"
+      INVIPS_ADMIN_PASSWORD: ${INVIPS_ADMIN_PASSWORD:?defina INVIPS_ADMIN_PASSWORD no .env}
+      INVIPS_CURADOR_PASSWORD: ${INVIPS_CURADOR_PASSWORD:?defina INVIPS_CURADOR_PASSWORD no .env}
+      INVIPS_BACKUP_PASSWORD: ${INVIPS_BACKUP_PASSWORD:?defina INVIPS_BACKUP_PASSWORD no .env}
+      TZ: America/Sao_Paulo
+    command:
+      - postgres
+      - -c
+      - hba_file=/etc/postgresql/pg_hba.conf
+      - -c
+      - password_encryption=scram-sha-256
+      - -c
+      - timezone=America/Sao_Paulo
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+      - ./db/config/pg_hba.conf:/etc/postgresql/pg_hba.conf:ro
+      - ./backups:/backups
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d invips"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  # Aplica as migrações de esquema (db/migrations) a cada `up` e termina.
+  migrate:
+    image: flyway/flyway:13.7.0
+    depends_on:
+      db:
+        condition: service_healthy
+    command: -connectRetries=10 migrate
+    environment:
+      FLYWAY_URL: jdbc:postgresql://db:5432/invips
+      FLYWAY_USER: invips_admin
+      FLYWAY_PASSWORD: ${INVIPS_ADMIN_PASSWORD}
+      FLYWAY_SCHEMAS: migracao
+      FLYWAY_LOCATIONS: filesystem:/flyway/sql
+    volumes:
+      - ./db/migrations:/flyway/sql:ro
+
+  # Carga inicial, separada das migrações. Só roda quando chamada:
+  #   docker compose --profile carga run --rm carga <nucleo|infraestrutura|noticias|todos> [dir]
+  carga:
+    image: postgres:18.6
+    profiles: ["carga"]
+    depends_on:
+      db:
+        condition: service_healthy
+    entrypoint: ["bash", "/carga/executar.sh"]
+    environment:
+      PGHOST: db
+      PGDATABASE: invips
+      PGUSER: invips_curador
+      PGOPTIONS: -c client_min_messages=warning
+      PGPASSWORD: ${INVIPS_CURADOR_PASSWORD}
+      DADOS_DIR: /dados
+    volumes:
+      - ./db/carga-inicial:/carga:ro
+      - ./dados:/dados:ro
+
+volumes:
+  pgdata:

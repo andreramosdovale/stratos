@@ -1,0 +1,3 @@
+id_noticia,faccao_a,faccao_b,tipo,descricao,origem,modelo_llm,validado_por_humano,validado_em
+N1,Facção Exemplo A,Facção Exemplo B,confronto,,llm,modelo-exemplo,true,2024-03-01T10:00:00-03:00
+N3,Facção Exemplo A,Facção Exemplo C,alianca,Descrição fictícia,llm,modelo-exemplo,false,

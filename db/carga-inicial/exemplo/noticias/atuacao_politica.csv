@@ -1,0 +1,2 @@
+id_noticia,faccao,pessoa_chave,pessoa_nome,cargo,descricao,origem,modelo_llm,validado_por_humano,validado_em
+N3,Facção Exemplo C,,Pessoa Fictícia Três,vereador,Descrição fictícia de vínculo,humano,,true,2024-03-02T09:00:00-03:00

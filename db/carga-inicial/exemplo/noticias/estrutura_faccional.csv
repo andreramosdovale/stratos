@@ -1,0 +1,2 @@
+id_noticia,faccao,pessoa_chave,pessoa_nome,cargo_funcao,descricao,origem,modelo_llm,validado_por_humano,validado_em
+N2,Facção Exemplo A,P-002,Pessoa Fictícia Dois,gerente local,Descrição fictícia,llm,modelo-exemplo,false,

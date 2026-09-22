@@ -1,0 +1,4 @@
+id_noticia,codigo_ibge,origem,modelo_llm,validado_por_humano,validado_em
+N1,3304557,llm,modelo-exemplo,true,2024-03-01T10:00:00-03:00
+N2,2304400,llm,modelo-exemplo,false,
+N3,1501402,humano,,true,2024-03-02T09:00:00-03:00

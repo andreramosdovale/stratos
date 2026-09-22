@@ -1,0 +1,4 @@
+banco,codigo_origem,titulo,eixo,valor_contratado,data_contratacao,situacao,fonte,municipios
+BANCO-N,P-001,Projeto fictício de mobilidade,transportes,15000000.00,2019-05-10,concluído,FONTE-EXEMPLO-A,3550308|3304557
+BANCO-R,P-001,Projeto fictício de linha de transmissão,energia,8000000.00,2020-02-01,em execução,FONTE-EXEMPLO-A,2304400
+BANCO-R,P-002,Projeto fictício de fibra óptica,telecomunicacoes,,,,FONTE-EXEMPLO-B,1501402|2927408

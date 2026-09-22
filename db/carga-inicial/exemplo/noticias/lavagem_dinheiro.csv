@@ -1,0 +1,2 @@
+id_noticia,faccao,mecanismo,valor_estimado,descricao,origem,modelo_llm,validado_por_humano,validado_em
+N2,Facção Exemplo A,empresa de fachada,250000.00,,llm,modelo-exemplo,false,

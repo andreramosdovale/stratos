@@ -1,0 +1,3 @@
+id_noticia,faccao,tipo,descricao,origem,modelo_llm,validado_por_humano,validado_em
+N2,Facção Exemplo A,trafico_drogas,,llm,modelo-exemplo,true,2024-03-01T10:00:00-03:00
+N3,,servicos_ilegais,Descrição fictícia,humano,,true,2024-03-02T09:00:00-03:00
