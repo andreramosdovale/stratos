@@ -1,6 +1,6 @@
 # Modelo Entidade-Relacionamento
 
-Modelo lógico implementado em `db/migrations/`. Colunas completas em
+Modelo lógico implementado em `db/init/`. Colunas completas em
 [`DICIONARIO-DADOS.md`](DICIONARIO-DADOS.md). As tabelas de domínio
 (`ref_*`), as colunas de proveniência e `criado_em`/`atualizado_em` foram
 omitidas dos diagramas para facilitar a leitura.

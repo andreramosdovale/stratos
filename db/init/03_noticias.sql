@@ -1,4 +1,4 @@
--- V3: dataset de notícias e os 11 eixos informacionais.
+-- Dataset de notícias e os 11 eixos informacionais.
 -- Toda tabela de eixo carrega as colunas de proveniência (RF-5):
 --   origem, modelo_llm, validado_por_humano, validado_em, lote_carga_id.
 -- Cada fato multivalorado por notícia tem tabela própria (4FN).

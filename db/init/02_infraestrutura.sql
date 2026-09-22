@@ -1,4 +1,4 @@
--- V2: dataset Homicídios × Infraestrutura.
+-- Dataset Homicídios × Infraestrutura.
 -- Os indicadores de cada eixo ficam num catálogo (indicador) com as medições
 -- em formato longo (medicao_indicador): novos indicadores entram sem DDL.
 

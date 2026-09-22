@@ -1,5 +1,7 @@
 .env
-backups/*
-!backups/.gitkeep
+__pycache__/
+# CSVs reais ficam fora do git; só os exemplos fictícios são versionados
 dados/*
 !dados/.gitkeep
+!dados/exemplo/
+!dados/README.md

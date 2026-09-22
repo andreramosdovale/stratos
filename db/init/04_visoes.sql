@@ -1,4 +1,4 @@
--- V5: dicionário de dados consultável (RF-11) e visão de qualidade (RF-5).
+-- Dicionário de dados consultável (RF-11) e visão de qualidade (RF-5).
 
 CREATE VIEW nucleo.v_dicionario_dados AS
 SELECT
@@ -14,7 +14,7 @@ SELECT
 FROM pg_class c
 JOIN pg_namespace n ON n.oid = c.relnamespace
 JOIN pg_attribute a ON a.attrelid = c.oid AND a.attnum > 0 AND NOT a.attisdropped
-WHERE n.nspname IN ('nucleo', 'infraestrutura', 'noticias', 'auditoria')
+WHERE n.nspname IN ('nucleo', 'infraestrutura', 'noticias')
   AND c.relkind IN ('r', 'v');
 COMMENT ON VIEW nucleo.v_dicionario_dados IS 'Dicionário de dados: tabelas, colunas, tipos e descrições dos esquemas de dados.';
 COMMENT ON COLUMN nucleo.v_dicionario_dados.esquema IS 'Esquema.';

@@ -1,52 +1,35 @@
-# Carga inicial
+# Dados de carga
 
-Scripts que levam os datasets de pesquisa para o banco **uma única vez por
-conjunto**. Ficam separados das migrações (`db/migrations/`), que só contêm
-estrutura e dados de referência. `docker compose up` nunca dispara uma carga.
+CSVs que alimentam a **carga inicial** do banco, uma pasta por conjunto:
 
-## Como executar
-
-```bash
-# CSVs reais em ./dados/<conjunto>/ (pasta ignorada pelo git)
-docker compose --profile carga run --rm carga nucleo
-docker compose --profile carga run --rm carga infraestrutura
-docker compose --profile carga run --rm carga noticias
-# ou, na ordem, tudo de uma vez:
-docker compose --profile carga run --rm carga todos
-
-# Testar com os CSVs fictícios de exemplo:
-docker compose --profile carga run --rm carga todos /carga/exemplo
+```
+dados/
+├── exemplo/          # CSVs fictícios, versionados, para testar
+├── nucleo/           # CSVs reais (ignorados pelo git)
+├── infraestrutura/
+└── noticias/
 ```
 
-> No Git Bash do Windows, exporte `MSYS_NO_PATHCONV=1` antes, senão o
-> caminho `/carga/exemplo` é convertido para um caminho do Windows.
+## Como carregar
+
+```bash
+python carga.py todos                      # lê ./dados/<conjunto>/
+python carga.py nucleo                     # ou um conjunto por vez
+python carga.py todos --dir dados/exemplo  # testar com os exemplos
+```
 
 A ordem é obrigatória: `nucleo` → `infraestrutura` → `noticias`.
 
-## O que acontece em cada conjunto
-
-Tudo roda como `invips_curador`, numa única transação
-(`psql --single-transaction -v ON_ERROR_STOP=1`):
-
-1. `01_staging.sql`: recria as tabelas `staging.<arquivo>` (todas as colunas
-   `text`, mais o número da linha) e faz `\copy` dos CSVs. Espaços nas pontas
-   são removidos e campos vazios viram `NULL`.
-2. `02_validacao.sql`: confere obrigatoriedade, tipos, faixas, domínios,
-   referências e duplicidades. Cada problema vira uma linha em
-   `pg_temp.rejeicao`. Se houver alguma, o script lista
-   `arquivo | linha | motivo` e **aborta: nada é gravado**.
-3. `03_transformacao.sql`: registra um `nucleo.lote_carga` (com o SHA-256 de
-   cada CSV), insere nos esquemas finais, mostra as contagens e apaga as
-   tabelas de staging.
-
-Executar de novo um conjunto já carregado é recusado sem alterar nada.
-Correções posteriores são feitas pelo curador com DML, e cada uma fica
-registrada em `auditoria.log_alteracao`.
+Cada conjunto é gravado numa única transação e registrado em
+`nucleo.lote_carga` com o SHA-256 de cada arquivo. As regras abaixo são
+garantidas pelas constraints do banco: na primeira linha que violar alguma, o
+script mostra `arquivo:linha` e o motivo, e nada daquele conjunto é gravado.
+Rodar de novo um conjunto já carregado falha na primeira chave duplicada.
 
 ## Formato dos arquivos
 
-- UTF-8 **sem BOM**, separador `,`, aspas `"` quando necessário, cabeçalho na
-  primeira linha com exatamente os nomes abaixo (`HEADER match`).
+- UTF-8, separador `,`, aspas `"` quando necessário, cabeçalho na primeira
+  linha com exatamente os nomes abaixo.
 - Datas: `AAAA-MM-DD`. Instantes: ISO 8601 com fuso (`2024-03-01T10:00:00-03:00`).
 - Decimais com ponto (`12.5`). Booleanos: `true`/`false`.
 - Listas dentro de uma célula: itens separados por `|`.
@@ -80,8 +63,8 @@ registrada em `auditoria.log_alteracao`.
 
 ### `noticias/`
 
-Todos os arquivos, exceto `noticias.csv`, têm `id_noticia`* (que precisa
-existir em `noticias.csv`) e terminam com as colunas de proveniência.
+Todos os arquivos, exceto `noticias.csv`, começam com `id_noticia`* (que
+precisa existir em `noticias.csv`) e terminam com as colunas de proveniência.
 
 | Arquivo | Eixo | Colunas próprias |
 |---|---|---|
@@ -99,13 +82,13 @@ existir em `noticias.csv`) e terminam com as colunas de proveniência.
 | `operacoes_policiais.csv` | 11. Operações policiais | `id_operacao`* (único por notícia), `nome_operacao`, `orgao`, `codigo_ibge`, `data_operacao`, `qtd_presos`, `qtd_mortos` |
 
 **Pessoas.** `pessoa_chave` desambigua homônimos. Sem ela, o nome é usado
-como chave. Uma mesma chave com nomes diferentes em qualquer arquivo é rejeitada.
+como chave. Se uma chave aparecer com nomes diferentes, vale o primeiro nome lido.
 
 **Facções e veículos** são criados a partir dos nomes citados. A carga lista
 as facções novas: confira se não há grafias diferentes da mesma facção.
 
 **Domínios** (papéis, tipos de relação, atividade, item) são tabelas `ref_*`.
-Novos valores entram por migração, sem mudar a estrutura das tabelas.
+Para um valor novo, basta um `INSERT` na tabela `ref_*` (e no `db/init/` correspondente).
 
 ## Conversão dos arquivos originais
 

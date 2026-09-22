@@ -1,22 +1,6 @@
 # Dicionário de dados
 
-> Gerado por `scripts/gerar-dicionario.sh` a partir de `nucleo.v_dicionario_dados`. Não edite à mão: altere os `COMMENT ON` nas migrações.
-
-## auditoria.log_alteracao
-
-Registro de toda escrita nas tabelas dos esquemas de dados. Somente leitura para o curador.
-
-| Coluna | Tipo | Nulo | Descrição |
-|---|---|---|---|
-| `id` | bigint | não | Identificador interno. |
-| `tabela` | text | não | Tabela alterada (esquema.tabela). |
-| `operacao` | text | não | INSERT, UPDATE ou DELETE. |
-| `chave` | jsonb | não | Chave primária da linha alterada. |
-| `dados_antigos` | jsonb | sim | Linha antes da alteração (UPDATE/DELETE). |
-| `dados_novos` | jsonb | sim | Linha depois da alteração (INSERT/UPDATE). |
-| `usuario` | text | não | Usuário da sessão que fez a alteração. |
-| `transacao` | bigint | não | Identificador da transação. |
-| `ocorrido_em` | timestamp with time zone | não | Início da transação que fez a alteração. |
+> Extraído de `nucleo.v_dicionario_dados` (descrições vindas dos `COMMENT ON` de `db/init/`). Para a versão sempre atual, consulte a visão no banco.
 
 ## infraestrutura.banco_desenvolvimento
 
@@ -28,7 +12,6 @@ Bancos nacionais ou regionais de desenvolvimento financiadores.
 | `sigla` | text | não | Sigla do banco; chave natural. |
 | `nome` | text | não | Nome do banco. |
 | `abrangencia` | text | não | Nacional ou regional. |
-
 ## infraestrutura.homicidio
 
 Contagem anual de homicídios por município e fonte.
@@ -41,7 +24,6 @@ Contagem anual de homicídios por município e fonte.
 | `quantidade` | integer | não | Número de homicídios no ano. |
 | `fonte_dado_id` | bigint | não | Fonte da contagem. |
 | `lote_carga_id` | bigint | não | Lote de carga que trouxe o registro. |
-
 ## infraestrutura.indicador
 
 Catálogo de indicadores de infraestrutura, classificados por eixo.
@@ -54,7 +36,6 @@ Catálogo de indicadores de infraestrutura, classificados por eixo.
 | `nome` | text | não | Nome legível. |
 | `unidade` | text | não | Unidade de medida (ex.: km, %, MWh). |
 | `descricao` | text | não | Definição e forma de cálculo. |
-
 ## infraestrutura.medicao_indicador
 
 Valor de um indicador de infraestrutura para um município e ano.
@@ -68,7 +49,6 @@ Valor de um indicador de infraestrutura para um município e ano.
 | `valor` | numeric | não | Valor na unidade do indicador. |
 | `fonte_dado_id` | bigint | não | Fonte do valor. |
 | `lote_carga_id` | bigint | não | Lote de carga que trouxe o registro. |
-
 ## infraestrutura.projeto_financiado
 
 Projeto de infraestrutura financiado por banco de desenvolvimento.
@@ -85,7 +65,6 @@ Projeto de infraestrutura financiado por banco de desenvolvimento.
 | `situacao` | text | sim | Situação do projeto na fonte (ex.: em execução, concluído). |
 | `fonte_dado_id` | bigint | não | Fonte do registro. |
 | `lote_carga_id` | bigint | não | Lote de carga que trouxe o registro. |
-
 ## infraestrutura.projeto_municipio
 
 Municípios atendidos por cada projeto financiado.
@@ -94,7 +73,6 @@ Municípios atendidos por cada projeto financiado.
 |---|---|---|---|
 | `projeto_id` | bigint | não | Projeto financiado. |
 | `municipio_id` | bigint | não | Município atendido. |
-
 ## infraestrutura.ref_abrangencia_banco
 
 Domínio: abrangência de um banco de desenvolvimento.
@@ -103,7 +81,6 @@ Domínio: abrangência de um banco de desenvolvimento.
 |---|---|---|---|
 | `codigo` | text | não | Código da abrangência. |
 | `descricao` | text | não | Descrição. |
-
 ## infraestrutura.ref_eixo
 
 Domínio: eixos de infraestrutura.
@@ -112,7 +89,6 @@ Domínio: eixos de infraestrutura.
 |---|---|---|---|
 | `codigo` | text | não | Código do eixo. |
 | `descricao` | text | não | Descrição do eixo. |
-
 ## noticias.apreensao
 
 Eixo 10 (apreensões): item apreendido relatado na notícia.
@@ -132,7 +108,6 @@ Eixo 10 (apreensões): item apreendido relatado na notícia.
 | `validado_por_humano` | boolean | não | Se um pesquisador revisou e confirmou o registro. |
 | `validado_em` | timestamp with time zone | sim | Instante da validação humana (preenchido se e só se validado_por_humano). |
 | `lote_carga_id` | bigint | não | Lote de carga que trouxe o registro. |
-
 ## noticias.atividade_ilicita
 
 Eixo 8 (atividades econômicas ilícitas): atividade ilícita relatada na notícia.
@@ -149,7 +124,6 @@ Eixo 8 (atividades econômicas ilícitas): atividade ilícita relatada na notíc
 | `validado_por_humano` | boolean | não | Se um pesquisador revisou e confirmou o registro. |
 | `validado_em` | timestamp with time zone | sim | Instante da validação humana (preenchido se e só se validado_por_humano). |
 | `lote_carga_id` | bigint | não | Lote de carga que trouxe o registro. |
-
 ## noticias.atuacao_politica
 
 Eixo 9 (atuação política): vínculo ou ação política de facção ou pessoa relatada na notícia.
@@ -167,7 +141,6 @@ Eixo 9 (atuação política): vínculo ou ação política de facção ou pessoa
 | `validado_por_humano` | boolean | não | Se um pesquisador revisou e confirmou o registro. |
 | `validado_em` | timestamp with time zone | sim | Instante da validação humana (preenchido se e só se validado_por_humano). |
 | `lote_carga_id` | bigint | não | Lote de carga que trouxe o registro. |
-
 ## noticias.disputa_faccao
 
 Facções envolvidas em cada disputa territorial.
@@ -176,7 +149,6 @@ Facções envolvidas em cada disputa territorial.
 |---|---|---|---|
 | `disputa_id` | bigint | não | Disputa territorial. |
 | `faccao_id` | bigint | não | Facção envolvida. |
-
 ## noticias.disputa_territorial
 
 Eixo 5 (disputas territoriais): disputa por um território relatada na notícia.
@@ -193,7 +165,6 @@ Eixo 5 (disputas territoriais): disputa por um território relatada na notícia.
 | `validado_por_humano` | boolean | não | Se um pesquisador revisou e confirmou o registro. |
 | `validado_em` | timestamp with time zone | sim | Instante da validação humana (preenchido se e só se validado_por_humano). |
 | `lote_carga_id` | bigint | não | Lote de carga que trouxe o registro. |
-
 ## noticias.estrutura_faccional
 
 Eixo 4 (gestão e estrutura faccional): posição/função de uma pessoa ou traço organizacional de uma facção.
@@ -211,7 +182,6 @@ Eixo 4 (gestão e estrutura faccional): posição/função de uma pessoa ou tra�
 | `validado_por_humano` | boolean | não | Se um pesquisador revisou e confirmou o registro. |
 | `validado_em` | timestamp with time zone | sim | Instante da validação humana (preenchido se e só se validado_por_humano). |
 | `lote_carga_id` | bigint | não | Lote de carga que trouxe o registro. |
-
 ## noticias.homicidio_noticiado
 
 Eixo 3 (homicídio): evento de homicídio relatado na notícia.
@@ -230,7 +200,6 @@ Eixo 3 (homicídio): evento de homicídio relatado na notícia.
 | `validado_por_humano` | boolean | não | Se um pesquisador revisou e confirmou o registro. |
 | `validado_em` | timestamp with time zone | sim | Instante da validação humana (preenchido se e só se validado_por_humano). |
 | `lote_carga_id` | bigint | não | Lote de carga que trouxe o registro. |
-
 ## noticias.lavagem_dinheiro
 
 Eixo 7 (lavagem de dinheiro): esquema de lavagem relatado na notícia.
@@ -248,7 +217,6 @@ Eixo 7 (lavagem de dinheiro): esquema de lavagem relatado na notícia.
 | `validado_por_humano` | boolean | não | Se um pesquisador revisou e confirmou o registro. |
 | `validado_em` | timestamp with time zone | sim | Instante da validação humana (preenchido se e só se validado_por_humano). |
 | `lote_carga_id` | bigint | não | Lote de carga que trouxe o registro. |
-
 ## noticias.noticia
 
 Eixo 1 (identificadores básicos): uma notícia publicada.
@@ -265,7 +233,6 @@ Eixo 1 (identificadores básicos): uma notícia publicada.
 | `lote_carga_id` | bigint | não | Lote de carga que trouxe o registro. |
 | `criado_em` | timestamp with time zone | não | Instante de criação do registro. |
 | `atualizado_em` | timestamp with time zone | não | Instante da última alteração do registro. |
-
 ## noticias.noticia_municipio
 
 Municípios mencionados como local dos fatos da notícia.
@@ -279,7 +246,6 @@ Municípios mencionados como local dos fatos da notícia.
 | `validado_por_humano` | boolean | não | Se um pesquisador revisou e confirmou o registro. |
 | `validado_em` | timestamp with time zone | sim | Instante da validação humana (preenchido se e só se validado_por_humano). |
 | `lote_carga_id` | bigint | não | Lote de carga que trouxe o registro. |
-
 ## noticias.noticia_pessoa
 
 Eixo 2 (pessoas envolvidas): pessoa citada na notícia e seu papel.
@@ -294,7 +260,6 @@ Eixo 2 (pessoas envolvidas): pessoa citada na notícia e seu papel.
 | `validado_por_humano` | boolean | não | Se um pesquisador revisou e confirmou o registro. |
 | `validado_em` | timestamp with time zone | sim | Instante da validação humana (preenchido se e só se validado_por_humano). |
 | `lote_carga_id` | bigint | não | Lote de carga que trouxe o registro. |
-
 ## noticias.operacao_policial
 
 Eixo 11 (operações policiais): operação policial relatada na notícia.
@@ -315,7 +280,6 @@ Eixo 11 (operações policiais): operação policial relatada na notícia.
 | `validado_por_humano` | boolean | não | Se um pesquisador revisou e confirmou o registro. |
 | `validado_em` | timestamp with time zone | sim | Instante da validação humana (preenchido se e só se validado_por_humano). |
 | `lote_carga_id` | bigint | não | Lote de carga que trouxe o registro. |
-
 ## noticias.ref_papel_pessoa
 
 Domínio: papel de uma pessoa numa notícia.
@@ -324,7 +288,6 @@ Domínio: papel de uma pessoa numa notícia.
 |---|---|---|---|
 | `codigo` | text | não | Código do papel. |
 | `descricao` | text | não | Descrição. |
-
 ## noticias.ref_tipo_atividade
 
 Domínio: tipo de atividade econômica ilícita.
@@ -333,7 +296,6 @@ Domínio: tipo de atividade econômica ilícita.
 |---|---|---|---|
 | `codigo` | text | não | Código do tipo. |
 | `descricao` | text | não | Descrição. |
-
 ## noticias.ref_tipo_item
 
 Domínio: tipo de item apreendido.
@@ -342,7 +304,6 @@ Domínio: tipo de item apreendido.
 |---|---|---|---|
 | `codigo` | text | não | Código do tipo. |
 | `descricao` | text | não | Descrição. |
-
 ## noticias.ref_tipo_relacao
 
 Domínio: tipo de relação entre facções.
@@ -351,7 +312,6 @@ Domínio: tipo de relação entre facções.
 |---|---|---|---|
 | `codigo` | text | não | Código do tipo. |
 | `descricao` | text | não | Descrição. |
-
 ## noticias.relacao_faccional
 
 Eixo 6 (confrontos e alianças): relação entre duas facções relatada na notícia.
@@ -369,7 +329,6 @@ Eixo 6 (confrontos e alianças): relação entre duas facções relatada na not�
 | `validado_por_humano` | boolean | não | Se um pesquisador revisou e confirmou o registro. |
 | `validado_em` | timestamp with time zone | sim | Instante da validação humana (preenchido se e só se validado_por_humano). |
 | `lote_carga_id` | bigint | não | Lote de carga que trouxe o registro. |
-
 ## noticias.v_qualidade_por_eixo (visão)
 
 Proporção de registros validados por humanos em cada eixo informacional.
@@ -381,7 +340,6 @@ Proporção de registros validados por humanos em cada eixo informacional.
 | `por_llm` | bigint | sim | Registros preenchidos por LLM. |
 | `validados` | bigint | sim | Registros validados por humano. |
 | `pct_validados` | numeric | sim | Percentual validado. |
-
 ## nucleo.faccao
 
 Facções/organizações criminosas citadas.
@@ -392,7 +350,6 @@ Facções/organizações criminosas citadas.
 | `nome` | text | não | Nome canônico da facção; chave natural. |
 | `criado_em` | timestamp with time zone | não | Instante de criação do registro. |
 | `atualizado_em` | timestamp with time zone | não | Instante da última alteração do registro. |
-
 ## nucleo.fonte_dado
 
 Fontes primárias dos dados (ex.: SIM/DataSUS, Anatel, ANEEL, BNDES).
@@ -403,7 +360,6 @@ Fontes primárias dos dados (ex.: SIM/DataSUS, Anatel, ANEEL, BNDES).
 | `nome` | text | não | Nome curto da fonte; chave natural. |
 | `descricao` | text | sim | Descrição da fonte e da metodologia de coleta. |
 | `url` | text | sim | Endereço de referência da fonte. |
-
 ## nucleo.lote_carga
 
 Cada execução de carga de dados; garante rastreabilidade de cada registro até o arquivo de origem.
@@ -416,7 +372,6 @@ Cada execução de carga de dados; garante rastreabilidade de cada registro até
 | `carregado_em` | timestamp with time zone | não | Instante da carga. |
 | `carregado_por` | text | não | Usuário de banco que executou a carga. |
 | `observacao` | text | sim | Observação livre do curador. |
-
 ## nucleo.municipio
 
 Municípios brasileiros; localidade comum aos datasets.
@@ -429,7 +384,6 @@ Municípios brasileiros; localidade comum aos datasets.
 | `uf_id` | smallint | não | UF do município; deve coincidir com os 2 primeiros dígitos do código IBGE. |
 | `criado_em` | timestamp with time zone | não | Instante de criação do registro. |
 | `atualizado_em` | timestamp with time zone | não | Instante da última alteração do registro. |
-
 ## nucleo.pessoa
 
 Pessoas citadas nos datasets. Homônimos são distinguidos pela chave de origem atribuída na curadoria.
@@ -441,7 +395,6 @@ Pessoas citadas nos datasets. Homônimos são distinguidos pela chave de origem 
 | `nome` | text | não | Nome como aparece na fonte. |
 | `criado_em` | timestamp with time zone | não | Instante de criação do registro. |
 | `atualizado_em` | timestamp with time zone | não | Instante da última alteração do registro. |
-
 ## nucleo.ref_origem_preenchimento
 
 Domínio: quem preencheu um campo informacional (LLM ou humano).
@@ -450,7 +403,6 @@ Domínio: quem preencheu um campo informacional (LLM ou humano).
 |---|---|---|---|
 | `codigo` | text | não | Código do domínio. |
 | `descricao` | text | não | Descrição legível. |
-
 ## nucleo.uf
 
 Unidades da Federação (código IBGE).
@@ -460,7 +412,6 @@ Unidades da Federação (código IBGE).
 | `id` | smallint | não | Código IBGE da UF (2 dígitos). |
 | `sigla` | character(2) | não | Sigla da UF. |
 | `nome` | text | não | Nome da UF. |
-
 ## nucleo.v_dicionario_dados (visão)
 
 Dicionário de dados: tabelas, colunas, tipos e descrições dos esquemas de dados.
@@ -476,7 +427,6 @@ Dicionário de dados: tabelas, colunas, tipos e descrições dos esquemas de dad
 | `tipo` | text | sim | Tipo de dado. |
 | `aceita_nulo` | boolean | sim | Se a coluna aceita nulo. |
 | `descricao_coluna` | text | sim | Descrição da coluna. |
-
 ## nucleo.veiculo_imprensa
 
 Veículos de imprensa que publicaram as notícias.
@@ -486,4 +436,3 @@ Veículos de imprensa que publicaram as notícias.
 | `id` | bigint | não | Identificador interno. |
 | `nome` | text | não | Nome do veículo; chave natural. |
 | `url` | text | sim | Endereço do veículo. |
-
